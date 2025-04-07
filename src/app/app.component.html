@@ -1,0 +1,49 @@
+<html>
+  <h3>Base64 image</h3>
+  <button type="button" (click)="changeUri({ok: true})">Image - 200</button>
+  <button type="button" (click)="changeUri({notfound: true})">Image - 404 Not Found</button>
+  <button type="button" (click)="changeUri({networkerror: true})">Image - 500 Internal Server Error</button>
+  <div>
+    <p>Use HTTP Get to load Base64 image</p>
+    <div *ngIf="isImageLoadingHttp">
+      <div class="loading-container"><div class="loader"></div></div>
+    </div>
+    <ng-container *ngIf="imageErrorCodeHttp >= 400; else successImageHttp">
+      <ng-container *ngIf="imageErrorCodeHttp == 404; else otherError">
+        <img src="assets/image/not_found.png">
+      </ng-container>
+    </ng-container>
+  </div>
+  <div>
+    <p>Use Fetch to load Base64 image</p>
+    <div *ngIf="isImageLoadingFetch">
+      <div class="loading-container"><div class="loader"></div></div>
+    </div>
+    <ng-container *ngIf="imageErrorCode >= 400; else successImage">
+      <ng-container *ngIf="imageErrorCode == 404; else otherError">
+        <img src="assets/image/not_found.png">
+      </ng-container>
+    </ng-container>
+    
+  </div>
+  <div>
+    <p>Use Image Service</p>
+    <div *ngIf="isImageLoadingIS">
+      <div class="loading-container"><div class="loader"></div></div>
+    </div>
+    <img src="{{imageSrcIS}}"/>
+    
+  </div>
+
+  <ng-template #otherError>
+    <img src="assets/image/error.png">
+  </ng-template>
+
+  <ng-template #successImage>
+    <img id="my-fetch-image-container" src="{{imageSrc}}"/>
+  </ng-template>
+
+  <ng-template #successImageHttp>
+    <img id="image-container" src="{{imageSrcHttp}}"/>
+  </ng-template>
+</html>
